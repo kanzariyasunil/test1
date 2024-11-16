@@ -3,144 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
-    <style>body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
+    <title>Nature-Themed Todo List</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #9be15d, #00e3ae);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Container */
+        #todo-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2f855a;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Todo list styles */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: linear-gradient(135deg, #a3e635, #4ade80);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        li span {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        /* Buttons */
+        button {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c53030;
+        }
+
+        .update-btn {
+            background: #3182ce;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background: #2b6cb0;
+        }
+
+        /* Forms */
+        form {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            border: 2px solid #68d391;
+            border-radius: 5px;
+            padding: 8px;
+            width: calc(100% - 100px);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #48bb78;
+        }
+
+        button[type="submit"] {
+            background: #38a169;
+            color: white;
+            font-size: 1rem;
+            padding: 8px 15px;
+        }
+
+        button[type="submit"]:hover {
+            background: #2f855a;
+        }
+
+        /* Hidden form for updates */
+        #update-form.hidden {
+            display: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Media Query for screens smaller than 768px */
+@media (max-width: 768px) {
+    #todo-container {
+        width: 90%;
+        padding: 15px;
     }
-    
+
     h1 {
+        font-size: 2rem;
+    }
+
+    ul {
+        font-size: 1rem;
+    }
+
+    li {
+        flex-direction: column;
         text-align: center;
     }
-    
-    #todo-container {
-        margin: 20px auto;
-        max-width: 400px;
-    }
-    
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    
-    li {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        background-color: #f4f4f4;
+
+    li span {
         margin-bottom: 10px;
     }
-    
+
     button {
-        background-color: red;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
+        width: 100%;
+        margin: 5px 0;
     }
-    
-    form {
-        margin-top: 20px;
-        text-align: center;
-    }
-    
+
     input[type="text"] {
-        padding: 8px;
-        margin: 5px;
-        width: 200px;
+        width: 100%;
     }
-    
+
+    form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
     button[type="submit"] {
-        padding: 8px 15px;
+        width: 100%;
     }
+}
+
+/* Media Query for screens smaller than 480px */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    li {
+        font-size: 0.9rem;
+    }
+
+    input[type="text"] {
+        font-size: 0.9rem;
+        padding: 6px;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 6px;
+    }
+
+    button[type="submit"] {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
+}
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
-    <h1>Todo List</h1>
-    
     <div id="todo-container">
+        <h1>🌿  Todo List 🌿</h1>
         <ul id="todo-list">
             {% for todo in todos %}
-                <li>{{ todo }} <button class="delete-btn" data-value="{{ todo }}">Delete</button></li>
+                <li>
+                    <span>{{ todo }}</span>
+                    <div>
+                        <button class="update-btn" data-value="{{ todo }}">Update</button>
+                        <button class="delete-btn" data-value="{{ todo }}">Delete</button>
+                    </div>
+                </li>
             {% endfor %}
         </ul>
+
+        <!-- Add Task Form -->
+        <form id="add-form">
+            <input type="text" id="new-task" placeholder="Add a new task" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <!-- Update Task Form -->
+        <form id="update-form" class="hidden">
+            <input type="text" id="update-task" placeholder="New task value" required>
+            <button type="submit">Update</button>
+        </form>
     </div>
 
-    <!-- Add Task Form -->
-    <form id="add-form">
-        <input type="text" id="new-task" placeholder="Add a new task" required>
-        <button type="submit">Add Task</button>
-    </form>
-
-    <!-- Update Task Form -->
-    <form id="update-form">
-        <input type="text" id="old-task" placeholder="Task to update" required>
-        <input type="text" id="new-task-update" placeholder="New task value" required>
-        <button type="submit">Update Task</button>
-    </form>
-
     <script>
-        // Add new task using AJAX
+        let updateTaskValue = '';
+
+        // Add task
         $('#add-form').on('submit', function(event) {
             event.preventDefault();
-            var task = $('#new-task').val();
-            
+            const task = $('#new-task').val();
             $.ajax({
                 url: '/add',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ value: task }),
                 success: function(response) {
-                    $('#todo-list').empty();
-                    response.todos.forEach(function(todo) {
-                        $('#todo-list').append('<li>' + todo + ' <button class="delete-btn" data-value="' + todo + '">Delete</button></li>');
-                    });
+                    refreshTodoList(response.todos);
                     $('#new-task').val('');
                 }
             });
         });
 
-        // Update task using AJAX
+        // Show update form
+        $(document).on('click', '.update-btn', function() {
+            updateTaskValue = $(this).data('value');
+            $('#update-form').removeClass('hidden');
+            $('#update-task').val(updateTaskValue).focus();
+        });
+
+        // Update task
         $('#update-form').on('submit', function(event) {
             event.preventDefault();
-            var oldTask = $('#old-task').val();
-            var newTask = $('#new-task-update').val();
-            
+            const newTask = $('#update-task').val();
             $.ajax({
                 url: '/update',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ value: oldTask, change_value: newTask }),
+                data: JSON.stringify({ value: updateTaskValue, change_value: newTask }),
                 success: function(response) {
-                    $('#todo-list').empty();
-                    response.todos.forEach(function(todo) {
-                        $('#todo-list').append('<li>' + todo + ' <button class="delete-btn" data-value="' + todo + '">Delete</button></li>');
-                    });
-                    $('#old-task').val('');
-                    $('#new-task-update').val('');
+                    refreshTodoList(response.todos);
+                    $('#update-form').addClass('hidden');
+                    $('#update-task').val('');
                 }
             });
         });
 
-        // Delete task using AJAX
+        // Delete task
         $(document).on('click', '.delete-btn', function() {
-            var task = $(this).data('value');
-            
+            const task = $(this).data('value');
             $.ajax({
                 url: '/delete',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ value: task }),
                 success: function(response) {
-                    $('#todo-list').empty();
-                    response.todos.forEach(function(todo) {
-                        $('#todo-list').append('<li>' + todo + ' <button class="delete-btn" data-value="' + todo + '">Delete</button></li>');
-                    });
+                    refreshTodoList(response.todos);
                 }
             });
         });
+
+        // Refresh the todo list
+        function refreshTodoList(todos) {
+            $('#todo-list').empty();
+            todos.forEach(todo => {
+                $('#todo-list').append(`
+                    <li>
+                        <span>${todo}</span>
+                        <div>
+                            <button class="update-btn" data-value="${todo}">Update</button>
+                            <button class="delete-btn" data-value="${todo}">Delete</button>
+                        </div>
+                    </li>
+                `);
+            });
+        }
     </script>
 </body>
 </html>
